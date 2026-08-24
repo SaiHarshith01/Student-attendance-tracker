@@ -1,0 +1,42 @@
+/* External CSS */
+
+
+/* Body */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+
+/* Form Box */
+
+.form-box {
+    background-color: #f5f5f5;
+
+    padding: 25px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+}
+
+
+/* Heading */
+
+h1 {
+    margin-bottom: 10px;
+}
+
+
+/* Table */
+
+table {
+    background-color: white;
+}
+
+
+/* Buttons */
+
+button {
+    margin-right: 5px;
+}
