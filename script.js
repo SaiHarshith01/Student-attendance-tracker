@@ -43,16 +43,16 @@ class Student {
 let studentsList = [];
 let attendanceLogs = [];
 
-// Populate default mockup students matching CSE-AIML details
+// Populate default mockup students matching CSE-AIML details with roll 160124748054 as Low Attendance
 const loadMockData = () => {
-    studentsList.push(new Student("Charan", "160124748043", "charan@gmail.com", "Male", "2026-07-13", "9876543210", 18, 2));
-    studentsList.push(new Student("Aniruth", "120124748039", "aniruth@gmail.com", "Male", "2026-07-13", "9876543210", 16, 4));
-    studentsList.push(new Student("Harshith", "160124748064", "harshith@gmail.com", "Male", "2026-07-13", "9876543210", 12, 8));
+    studentsList.push(new Student("Amit Sharma", "160124748054", "amit@gmail.com", "Male", "2026-07-13", "9876543210", 10, 10));
+    studentsList.push(new Student("Rohan Verma", "160124748012", "rohan@gmail.com", "Male", "2026-07-13", "9876543210", 18, 2));
+    studentsList.push(new Student("Sanya Gupta", "160124748088", "sanya@gmail.com", "Female", "2026-07-13", "9876543210", 17, 3));
 
     let dateStr = "2026-07-13";
-    attendanceLogs.push({ date: dateStr, studentRoll: 160124748043, studentName: "Charan", status: "Present" });
-    attendanceLogs.push({ date: dateStr, studentRoll: 120124748039, studentName: "Aniruth", status: "Present" });
-    attendanceLogs.push({ date: dateStr, studentRoll: 160124748064, studentName: "Harshith", status: "Absent" });
+    attendanceLogs.push({ date: dateStr, studentRoll: 160124748054, studentName: "Amit Sharma", status: "Present" });
+    attendanceLogs.push({ date: dateStr, studentRoll: 160124748012, studentName: "Rohan Verma", status: "Present" });
+    attendanceLogs.push({ date: dateStr, studentRoll: 160124748088, studentName: "Sanya Gupta", status: "Absent" });
 };
 
 // ==========================================
