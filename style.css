@@ -1,42 +1,101 @@
-/* External CSS */
+/* 
+  Student Attendance Tracker - Custom CSS Styling
+  Demonstrates CSS Box Model, CSS Selectors, margins, padding, and borders.
+*/
 
-
-/* Body */
-
+/* 1. Element Selector (Reset & Fonts) */
 body {
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f8fafc;
+    color: #334155;
+    padding-bottom: 20px; /* Box Model: bottom padding */
+    margin: 0;
 }
 
+/* 2. Element Selector (Section spacing) */
+section {
+    padding: 40px 0; /* Box Model: padding */
+    border-bottom: 1px solid #cbd5e1; /* Box Model: border line separating sections */
+    margin-bottom: 10px; /* Box Model: spacing between sections */
+}
 
-/* Form Box */
+/* 3. Class Selector (Title Banner styling) */
+.hero-section {
+    background-color: #1e3a8a;
+    color: #ffffff;
+    padding: 60px 10px; /* Box Model: padding */
+    border-radius: 6px;
+    margin-top: 10px;
+}
 
-.form-box {
-    background-color: #f5f5f5;
+/* 4. Class Selector (Dashboard statistic cards) */
+.dashboard-card {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1; /* Box Model: border */
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgb(0 0 0 / 0.05);
+}
 
-    padding: 25px;
+.dashboard-card .card-value {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2563eb;
+    margin-bottom: 5px; /* Box Model: margin spacing */
+}
 
-    border: 1px solid #ddd;
+.dashboard-card .card-label {
+    font-size: 14px;
+    color: #64748b;
+    font-weight: bold;
+}
 
+/* 5. Class Selector (Form Card layout) */
+.student-form-card {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1; /* Box Model: border */
     border-radius: 8px;
+    padding: 25px; /* Box Model: padding */
+    box-shadow: 0 4px 6px rgb(0 0 0 / 0.05);
 }
 
-
-/* Heading */
-
-h1 {
-    margin-bottom: 10px;
+/* 6. Class Selector (Student Table Container) */
+.student-table-container {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1; /* Box Model: border */
+    border-radius: 8px;
+    padding: 15px; /* Box Model: padding */
 }
 
-
-/* Table */
-
-table {
-    background-color: white;
+/* 7. Class Selectors for Attendance Status Badges */
+.status-badge {
+    padding: 5px 10px; /* Box Model: padding */
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    border: 1px solid transparent;
 }
 
+.status-good {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border-color: #badbcc;
+}
 
-/* Buttons */
+.status-low {
+    background-color: #f8d7da;
+    color: #842029;
+    border-color: #f5c2c7;
+}
 
-button {
-    margin-right: 5px;
+/* 8. Tag Selector (Footer styling) */
+footer {
+    background-color: #1e293b;
+    color: #94a3b8;
+    padding: 30px 10px; /* Box Model: padding */
+    border-top: 4px solid #2563eb;
+    text-align: center;
+    margin-top: 40px;
 }

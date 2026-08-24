@@ -1,388 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Attendance Tracker</title>
-
-    <!-- Bootstrap 5 -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
-
-    <!-- External CSS -->
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Box Model CSS -->
     <link rel="stylesheet" href="style.css">
-
 </head>
-
-
 <body>
 
-
-<!-- ================= NAVBAR ================= -->
-
-<nav class="navbar navbar-dark bg-dark">
-
-    <div class="container">
-
-        <span class="navbar-brand">
-            Student Attendance Tracker
-        </span>
-
-        <a class="nav-link text-white"
-           href="#addStudent">
-            Add Student
-        </a>
-
-    </div>
-
-</nav>
-
-
-<!-- ================= INTRODUCTION ================= -->
-
-<div class="container mt-4">
-
-    <div class="text-center">
-
-        <h1>Student Attendance Tracker</h1>
-
-        <p>
-            A simple application to manage student attendance.
-        </p>
-
-    </div>
-
-</div>
-
-
-<!-- ================= DASHBOARD ================= -->
-
-<div class="container mt-4">
-
-    <div class="row">
-
-        <div class="col-md-6">
-
-            <div class="card text-center">
-
-                <div class="card-body">
-
-                    <h3 id="totalStudents">0</h3>
-
-                    <p>Total Students</p>
-
-                </div>
-
+    <!-- 1. NAVBAR SECTION -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Student Attendance Tracker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#add-student">Add Student</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#student-records">Students</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#attendance-section">Attendance</a></li>
+                </ul>
             </div>
+        </div>
+    </nav>
 
+    <!-- 2. HOME / CAROUSEL SECTION -->
+    <section id="home" class="container mt-4">
+        <div class="hero-section text-center text-white bg-primary py-5 rounded-3">
+            <h1 class="display-5 fw-bold">STUDENT ATTENDANCE TRACKER</h1>
+            <p class="lead">Manage Student Attendance Easily</p>
+            <a href="#student-records" class="btn btn-light btn-lg px-4 me-2">View Students</a>
         </div>
 
-
-        <div class="col-md-6">
-
-            <div class="card text-center">
-
-                <div class="card-body">
-
-                    <h3 id="averageAttendance">
-                        0%
-                    </h3>
-
-                    <p>Average Attendance</p>
-
-                </div>
-
+        <!-- Bootstrap Carousel -->
+        <div id="studentCarousel" class="carousel slide mt-4 mx-auto" data-bs-ride="carousel" style="max-width: 600px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#studentCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#studentCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#studentCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
             </div>
-
+            <div class="carousel-inner bg-dark text-white py-5 text-center">
+                <div class="carousel-item active">
+                    <h4 class="py-4">Track Students</h4>
+                </div>
+                <div class="carousel-item">
+                    <h4 class="py-4">Mark Daily Attendance</h4>
+                </div>
+                <div class="carousel-item">
+                    <h4 class="py-4">Monitor Attendance Percentage</h4>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#studentCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#studentCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
+    </section>
 
-    </div>
-
-</div>
-
-
-<!-- ================= ADD STUDENT ================= -->
-
-<div
-    class="container mt-5"
-    id="addStudent">
-
-    <h2>Add Student</h2>
-
-    <!-- Bootstrap Alert -->
-
-    <div id="alertBox"></div>
-
-
-    <div class="form-box">
-
-        <!-- POST method -->
-
-        <form
-            id="studentForm"
-            method="POST">
-
+    <!-- 3. DASHBOARD SECTION -->
+    <section id="dashboard" class="bg-light mt-4">
+        <div class="container">
+            <h2 class="fw-bold mb-4">Dashboard</h2>
             <div class="row">
-
-
-                <!-- Name -->
-
-                <div class="col-md-6 mb-3">
-
-                    <label
-                        for="studentName"
-                        class="form-label">
-
-                        Student Name
-
-                    </label>
-
-                    <input
-                        type="text"
-                        id="studentName"
-                        class="form-control"
-                        placeholder="Enter name"
-                        required>
-
+                <!-- Total Students Card -->
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="dashboard-card">
+                        <div class="card-value" id="totalStudents">0</div>
+                        <div class="card-label">Total Students</div>
+                    </div>
                 </div>
-
-
-                <!-- Roll Number -->
-
-                <div class="col-md-6 mb-3">
-
-                    <label
-                        for="rollNo"
-                        class="form-label">
-
-                        Roll Number
-
-                    </label>
-
-                    <input
-                        type="number"
-                        id="rollNo"
-                        class="form-control"
-                        placeholder="Enter roll number"
-                        required>
-
+                <!-- Present Today Card -->
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="dashboard-card">
+                        <div class="card-value text-success" id="presentToday">0</div>
+                        <div class="card-label">Present Today</div>
+                    </div>
                 </div>
-
-
-                <!-- Email -->
-
-                <div class="col-md-6 mb-3">
-
-                    <label
-                        for="email"
-                        class="form-label">
-
-                        Email
-
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        class="form-control"
-                        placeholder="example@gmail.com"
-                        required>
-
+                <!-- Absent Today Card -->
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="dashboard-card">
+                        <div class="card-value text-danger" id="absentToday">0</div>
+                        <div class="card-label">Absent Today</div>
+                    </div>
                 </div>
-
-
-                <!-- Department -->
-
-                <div class="col-md-6 mb-3">
-
-                    <label
-                        for="department"
-                        class="form-label">
-
-                        Department
-
-                    </label>
-
-                    <select
-                        id="department"
-                        class="form-select"
-                        required>
-
-                        <option value="">
-                            Select Department
-                        </option>
-
-                        <option value="CSE">
-                            CSE
-                        </option>
-
-                        <option value="ECE">
-                            ECE
-                        </option>
-
-                        <option value="EEE">
-                            EEE
-                        </option>
-
-                        <option value="MECH">
-                            MECH
-                        </option>
-
-                    </select>
-
+                <!-- Avg Attendance Card -->
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="dashboard-card">
+                        <div class="card-value text-info" id="avgAttendance">0%</div>
+                        <div class="card-label">Avg Attendance</div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- 4. ADD STUDENT SECTION -->
+    <section id="add-student">
+        <div class="container">
+            <h2 class="fw-bold mb-4" id="formTitle">Add Student</h2>
 
-                <!-- Gender -->
+            <!-- Form Validation Alerts -->
+            <div id="alertPlaceholder" class="mb-3"></div>
 
-                <div class="col-md-6 mb-3">
+            <div class="student-form-card">
+                <!-- Form method="POST" handles payload delivery -->
+                <form id="studentForm" method="POST" novalidate>
+                    <input type="hidden" id="editMode" value="false">
+                    <input type="hidden" id="originalRollNo" value="">
 
-                    <label class="form-label">
-                        Gender
-                    </label>
-
-                    <div>
-
-                        <input
-                            type="radio"
-                            name="gender"
-                            value="Male">
-
-                        Male
-
-
-                        <input
-                            type="radio"
-                            name="gender"
-                            value="Female"
-                            class="ms-3">
-
-                        Female
-
+                    <div class="row">
+                        <!-- Student Name -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold" for="studentName">Student Name</label>
+                            <input type="text" class="form-control" id="studentName" placeholder="Rahul Kumar" required>
+                        </div>
+                        <!-- Roll Number -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold" for="rollNo">Roll Number</label>
+                            <input type="number" class="form-control" id="rollNo" placeholder="101" required>
+                        </div>
                     </div>
 
+                    <div class="row">
+                        <!-- Email Address -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold" for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="rahul@gmail.com" required>
+                        </div>
+                        <!-- Department -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold" for="department">Department</label>
+                            <select class="form-select" id="department" required>
+                                <option value="" selected disabled>Select Department</option>
+                                <option value="CSE">CSE</option>
+                                <option value="ECE">ECE</option>
+                                <option value="EEE">EEE</option>
+                                <option value="MECH">MECH</option>
+                                <option value="CIVIL">CIVIL</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Gender Selection -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold d-block">Gender</label>
+                            <div class="pt-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="genderMale" value="Male" required>
+                                    <label class="form-check-label" for="genderMale">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="Female">
+                                    <label class="form-check-label" for="genderFemale">Female</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="genderOther" value="Other">
+                                    <label class="form-check-label" for="genderOther">Other</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Date of Joining -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold" for="joiningDate">Date of Joining</label>
+                            <input type="date" class="form-control" id="joiningDate" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Phone Number -->
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold" for="phone">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" placeholder="9876543210" required>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary px-4 me-2" id="submitBtn">Add Student</button>
+                        <button type="button" class="btn btn-secondary px-4" id="resetBtn">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. STUDENT RECORDS SECTION -->
+    <section id="student-records" class="bg-light">
+        <div class="container">
+            <h2 class="fw-bold mb-4">Student Records</h2>
+
+            <!-- Search box -->
+            <div class="row mb-3 justify-content-end">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">🔍</span>
+                        <input type="text" class="form-control border-start-0" id="searchStudent" placeholder="Search student...">
+                    </div>
                 </div>
-
-
-                <!-- Date -->
-
-                <div class="col-md-6 mb-3">
-
-                    <label
-                        for="date"
-                        class="form-label">
-
-                        Date
-
-                    </label>
-
-                    <input
-                        type="date"
-                        id="date"
-                        class="form-control"
-                        required>
-
-                </div>
-
             </div>
 
+            <!-- Student Records Table -->
+            <div class="student-table-container table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Roll</th>
+                            <th>Name</th>
+                            <th>Dept</th>
+                            <th>Present</th>
+                            <th>Absent</th>
+                            <th>Attendance</th>
+                            <th>Status Alert</th>
+                            <th>Quick Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTableBody">
+                        <!-- Dynamic table rows -->
+                        <tr id="emptyRow">
+                            <td colspan="8" class="text-center text-muted py-4">No student records found. Add a student to start.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 
-            <!-- Buttons -->
+    <!-- 6. ATTENDANCE SECTION -->
+    <section id="attendance-section">
+        <div class="container">
+            <h2 class="fw-bold mb-4">Attendance</h2>
 
-            <button
-                type="submit"
-                class="btn btn-primary">
+            <div class="row">
+                <!-- Mark Attendance Container -->
+                <div class="col-md-5 mb-4">
+                    <div class="student-form-card">
+                        <h4 class="fw-bold mb-3">Mark Attendance</h4>
+                        <div id="attendanceAlertPlaceholder" class="mb-2"></div>
+                        <form id="attendanceForm" method="POST">
+                            <!-- Select Student Dropdown -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold" for="selectStudent">Select Student</label>
+                                <select class="form-select" id="selectStudent" required>
+                                    <option value="" selected disabled>Select Student</option>
+                                </select>
+                            </div>
+                            <!-- Date Selection -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold" for="attendanceDate">Date</label>
+                                <input type="date" class="form-control" id="attendanceDate" required>
+                            </div>
+                            <!-- Status -->
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold d-block">Status</label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="attendanceStatus" id="statusPresent" value="Present" checked>
+                                    <label class="form-check-label" for="statusPresent">Present</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="attendanceStatus" id="statusAbsent" value="Absent">
+                                    <label class="form-check-label" for="statusAbsent">Absent</label>
+                                </div>
+                            </div>
+                            <!-- Button -->
+                            <button type="submit" class="btn btn-success w-100 mt-2">Mark Attendance</button>
+                        </form>
+                    </div>
+                </div>
 
-                Add Student
+                <!-- 7. ATTENDANCE HISTORY -->
+                <div class="col-md-7">
+                    <div class="student-table-container">
+                        <h4 class="fw-bold mb-3">Attendance History</h4>
+                        <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                            <table class="table table-striped align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Student (Roll)</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historyTableBody">
+                                    <tr id="emptyHistoryRow">
+                                        <td colspan="3" class="text-center text-muted py-3">No history logs recorded yet.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            </button>
+    <!-- 8. FOOTER -->
+    <footer>
+        <div class="container">
+            <p class="mb-2">Student Attendance Tracker</p>
+            <p class="small text-muted mb-0">Demonstrating: HTML5, CSS Box Model, Bootstrap 5, Javascript OOP & jQuery ($)</p>
+        </div>
+    </footer>
 
-
-            <button
-                type="reset"
-                class="btn btn-secondary">
-
-                Reset
-
-            </button>
-
-        </form>
-
+    <!-- DELETE CONFIRMATION MODAL -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Student?</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete <strong id="modalStudentName"></strong> (Roll: <span id="modalStudentRoll"></span>)?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-</div>
-
-
-<!-- ================= STUDENT TABLE ================= -->
-
-<div class="container mt-5 mb-5">
-
-    <h2>Student Records</h2>
-
-
-    <div class="table-responsive">
-
-        <table class="table table-bordered">
-
-            <thead class="table-dark">
-
-                <tr>
-
-                    <th>Roll No</th>
-
-                    <th>Name</th>
-
-                    <th>Department</th>
-
-                    <th>Present</th>
-
-                    <th>Absent</th>
-
-                    <th>Attendance</th>
-
-                    <th>Action</th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody id="studentTable">
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-</div>
-
-
-<!-- Bootstrap JavaScript -->
-
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-</script>
-
-
-<!-- jQuery -->
-
-<script
-    src="https://code.jquery.com/jquery-3.7.1.min.js">
-</script>
-
-
-<!-- JavaScript -->
-
-<script src="script.js"></script>
-
-
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap 5 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
 </body>
-
 </html>
