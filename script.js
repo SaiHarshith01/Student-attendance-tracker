@@ -1,20 +1,18 @@
 /**
  * Student Attendance Tracker - script.js
- * Full implementation using: HTML5, CSS Box Model, Bootstrap 5 components,
- * JavaScript OOP (Student Class), jQuery ($) DOM selectors/events,
- * Regular Expressions (Regex) validations, Type conversions, Arrow Functions,
- * returns, and HTTP POST method demonstration.
+ * Full implementation with custom CSE-AIML configuration.
+ * Demonstrating: OOP (Student Class), jQuery ($), Regex validations,
+ * Type conversions, Arrow Functions, Returns, and HTTP POST simulation.
  */
 
 // ==========================================
 // 1. JAVASCRIPT OOP: STUDENT CLASS
 // ==========================================
 class Student {
-    constructor(name, rollNo, email, department, gender, joiningDate, phone, present = 0, absent = 0) {
+    constructor(name, rollNo, email, gender, joiningDate, phone, present = 0, absent = 0) {
         this.name = name;
-        this.rollNo = parseInt(rollNo); // Type Conversion (String to Number)
+        this.rollNo = parseInt(rollNo); // Type Conversion
         this.email = email;
-        this.department = department;
         this.gender = gender;
         this.joiningDate = joiningDate;
         this.phone = phone;
@@ -22,7 +20,7 @@ class Student {
         this.absent = parseInt(absent);
     }
 
-    // Method to calculate attendance percentage using return statement
+    // Calculate attendance percentage using return statement
     calculateAttendance() {
         let totalClasses = this.present + this.absent;
         if (totalClasses === 0) {
@@ -32,7 +30,7 @@ class Student {
         return Math.round(percentage); // return statement
     }
 
-    // Method to return attendance status based on 75% threshold
+    // Return attendance status based on 75% threshold
     getAttendanceStatus() {
         let percentage = this.calculateAttendance();
         return percentage >= 75 ? "Good" : "Low Attendance"; // return statement
@@ -45,23 +43,23 @@ class Student {
 let studentsList = [];
 let attendanceLogs = [];
 
-// Populate default mockup students
+// Populate default mockup students matching CSE-AIML details
 const loadMockData = () => {
-    studentsList.push(new Student("Rahul Kumar", 101, "rahul@gmail.com", "CSE", "Male", "2026-08-24", "9876543210", 18, 2));
-    studentsList.push(new Student("Priya Sharma", 102, "priya@gmail.com", "CSE", "Female", "2026-08-24", "9876543210", 16, 4));
-    studentsList.push(new Student("Arjun Reddy", 103, "arjun@gmail.com", "ECE", "Male", "2026-08-24", "9876543210", 12, 8));
+    studentsList.push(new Student("Charan", "160124748043", "charan@gmail.com", "Male", "2026-07-13", "9876543210", 18, 2));
+    studentsList.push(new Student("Aniruth", "120124748039", "aniruth@gmail.com", "Male", "2026-07-13", "9876543210", 16, 4));
+    studentsList.push(new Student("Harshith", "160124748064", "harshith@gmail.com", "Male", "2026-07-13", "9876543210", 12, 8));
 
-    let todayStr = new Date().toISOString().split('T')[0];
-    attendanceLogs.push({ date: todayStr, studentRoll: 101, studentName: "Rahul Kumar", status: "Present" });
-    attendanceLogs.push({ date: todayStr, studentRoll: 102, studentName: "Priya Sharma", status: "Present" });
-    attendanceLogs.push({ date: todayStr, studentRoll: 103, studentName: "Arjun Reddy", status: "Absent" });
+    let dateStr = "2026-07-13";
+    attendanceLogs.push({ date: dateStr, studentRoll: 160124748043, studentName: "Charan", status: "Present" });
+    attendanceLogs.push({ date: dateStr, studentRoll: 120124748039, studentName: "Aniruth", status: "Present" });
+    attendanceLogs.push({ date: dateStr, studentRoll: 160124748064, studentName: "Harshith", status: "Absent" });
 };
 
 // ==========================================
 // 3. ARROW FUNCTIONS FOR DOM MANIPULATION & LOGIC
 // ==========================================
 
-// Display top alerts using jQuery $
+// Display alerts using jQuery $
 const showAlert = (type, message) => {
     let alertHtml = `
         <div class="alert alert-${type} alert-dismissible fade show" role="alert">
@@ -75,7 +73,7 @@ const showAlert = (type, message) => {
 
 const showAttendanceAlert = (type, message) => {
     let alertHtml = `
-        <div class="alert alert-${type} alert-dismissible fade show animate-fade" role="alert">
+        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
             ${message}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
@@ -89,15 +87,15 @@ const updateDashboard = () => {
     let totalCount = studentsList.length;
     $("#totalStudents").text(totalCount); // jQuery $ DOM manipulation
 
-    // Get today's attendance details
-    let todayStr = new Date().toISOString().split('T')[0];
-    let todayLogs = attendanceLogs.filter(log => log.date === todayStr);
+    // Get today's attendance details (default date 13 July 2026)
+    let defaultDate = "2026-07-13";
+    let todayLogs = attendanceLogs.filter(log => log.date === defaultDate);
 
     let presentToday = todayLogs.filter(log => log.status === "Present").length;
     let absentToday = todayLogs.filter(log => log.status === "Absent").length;
 
-    $("#presentToday").text(presentToday); // jQuery $ DOM manipulation
-    $("#absentToday").text(absentToday);   // jQuery $ DOM manipulation
+    $("#presentToday").text(presentToday);
+    $("#absentToday").text(absentToday);
 
     // Calculate Average Attendance
     if (totalCount === 0) {
@@ -113,43 +111,41 @@ const updateDashboard = () => {
     $("#avgAttendance").text(avg + "%"); // jQuery $ DOM manipulation
 };
 
-// Render Students Table using jQuery $
-const renderStudentTable = (filteredList = studentsList) => {
+// Render Students Table using jQuery $ (No Department column)
+const renderStudentTable = () => {
     let tbody = $("#studentTableBody");
     tbody.empty(); // jQuery $ DOM manipulation
 
-    if (filteredList.length === 0) {
+    if (studentsList.length === 0) {
         tbody.append(`
             <tr id="emptyRow">
-                <td colspan="8" class="text-center text-muted py-4">No student records found.</td>
+                <td colspan="7" class="text-center text-muted py-4">No student records found.</td>
             </tr>
         `);
         return;
     }
 
-    filteredList.forEach(student => {
+    studentsList.forEach(student => {
         let attendancePct = student.calculateAttendance();
         let status = student.getAttendanceStatus();
         let statusClass = status === "Good" ? "status-good" : "status-low";
-        let statusIcon = status === "Good" ? "✓" : "⚠";
 
+        // Minimal Status Alert Column - Emojis/Symbols removed
         let row = `
             <tr data-roll="${student.rollNo}">
                 <td><strong>${student.rollNo}</strong></td>
                 <td>${student.name}</td>
-                <td><span class="badge bg-secondary">${student.department}</span></td>
                 <td class="text-success fw-bold">${student.present}</td>
                 <td class="text-danger fw-bold">${student.absent}</td>
                 <td><strong>${attendancePct}%</strong></td>
                 <td>
                     <span class="status-badge ${statusClass}">
-                        ${statusIcon} ${status}
+                        ${status}
                     </span>
                 </td>
                 <td>
                     <button class="btn btn-sm btn-success btn-present-click me-1" data-roll="${student.rollNo}">Present</button>
                     <button class="btn btn-sm btn-danger btn-absent-click me-1" data-roll="${student.rollNo}">Absent</button>
-                    <button class="btn btn-sm btn-primary btn-edit-click me-1" data-roll="${student.rollNo}">Edit</button>
                     <button class="btn btn-sm btn-outline-danger btn-delete-click" data-roll="${student.rollNo}" data-name="${student.name}">Delete</button>
                 </td>
             </tr>
@@ -226,37 +222,24 @@ const markAbsent = (rollNo) => {
     }
 };
 
-// Delete Student
-const deleteStudent = (rollNo) => {
-    studentsList = studentsList.filter(s => s.rollNo !== parseInt(rollNo));
-    // Filter attendance history too
-    attendanceLogs = attendanceLogs.filter(log => log.studentRoll !== parseInt(rollNo));
-    updateUI();
-    showAlert("success", `Student roll number ${rollNo} deleted successfully.`);
-};
-
-// Reset Form fields using jQuery $
+// Reset Form fields using jQuery $ (date set back to 13 July 2026)
 const resetForm = () => {
-    $("#studentForm")[0].reset(); // jQuery form reference access
-    $("#editMode").val("false");
-    $("#originalRollNo").val("");
-    $("#formTitle").text("Add Student");
-    $("#submitBtn").text("Add Student").removeClass("btn-warning").addClass("btn-primary");
-    $("#rollNo").prop("readonly", false);
+    $("#studentForm")[0].reset(); // jQuery reference
+    $("#joiningDate").val("2026-07-13");
 };
 
 // ==========================================
 // 5. REGULAR EXPRESSION VALIDATIONS
 // ==========================================
 const validateForm = (name, rollNo, email, phone, date, gender) => {
-    // A. Student Name Regex (letters and spaces only, length 2 to 50)
+    // A. Student Name Regex (letters and spaces only)
     let nameRegex = /^[a-zA-Z\s]{2,50}$/;
     if (!nameRegex.test(name)) {
-        showAlert("danger", "Please enter a valid Student Name (Letters and spaces only, 2-50 characters).");
+        showAlert("danger", "Please enter a valid Student Name (Letters and spaces only).");
         return false; // return statement
     }
 
-    // B. Roll Number check (Integer conversion validation)
+    // B. Roll Number check
     let rollInt = parseInt(rollNo);
     if (isNaN(rollInt) || rollInt <= 0 || rollNo.includes('.')) {
         showAlert("danger", "Please enter a valid positive Integer Roll Number.");
@@ -266,29 +249,23 @@ const validateForm = (name, rollNo, email, phone, date, gender) => {
     // C. Email Regex Validation
     let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
-        showAlert("danger", "Please enter a valid Email Address (e.g. rahul@gmail.com).");
+        showAlert("danger", "Please enter a valid Email Address.");
         return false; // return statement
     }
 
-    // D. Department Required Check
-    if (!$("#department").val()) {
-        showAlert("danger", "Please select a Department from the list.");
-        return false; // return statement
-    }
-
-    // E. Gender Radio Button Selection Check
+    // D. Gender Radio Button Selection Check
     if (!gender) {
         showAlert("danger", "Please select a Gender.");
         return false; // return statement
     }
 
-    // F. Date Selection Check
+    // E. Date Selection Check
     if (!date) {
-        showAlert("danger", "Please select a Date of Joining.");
+        showAlert("danger", "Please select a Date.");
         return false; // return statement
     }
 
-    // G. Phone Number Regex (Exactly 10 digits)
+    // F. Phone Number Regex (Exactly 10 digits)
     let phoneRegex = /^\d{10}$/;
     if (!phoneRegex.test(phone)) {
         showAlert("danger", "Please enter a valid 10-digit Phone Number.");
@@ -307,18 +284,17 @@ $(document).ready(() => {
     loadMockData();
     updateUI();
 
-    // Default dates to current date
-    let todayStr = new Date().toISOString().split('T')[0];
-    $("#joiningDate").val(todayStr);
-    $("#attendanceDate").val(todayStr);
+    // Default dates to 13 July 2026
+    let defaultDate = "2026-07-13";
+    $("#joiningDate").val(defaultDate);
+    $("#attendanceDate").val(defaultDate);
 
     // Reset button click event using jQuery $
     $("#resetBtn").on("click", () => {
         resetForm();
-        $("#joiningDate").val(todayStr);
     });
 
-    // Form Submission: Add or Update Student
+    // Form Submission: Add Student
     $("#studentForm").on("submit", (e) => {
         e.preventDefault(); // Prevents standard browser POST reload behavior
 
@@ -326,27 +302,21 @@ $(document).ready(() => {
         let name = $("#studentName").val().trim();
         let rollNo = $("#rollNo").val().trim();
         let email = $("#email").val().trim();
-        let department = $("#department").val();
         let gender = $("input[name='gender']:checked").val();
         let date = $("#joiningDate").val();
         let phone = $("#phone").val().trim();
-
-        let isEdit = $("#editMode").val() === "true";
-        let origRoll = $("#originalRollNo").val();
 
         // Perform validations using Regex & check return value
         if (!validateForm(name, rollNo, email, phone, date, gender)) {
             return; // return statement
         }
 
-        // Duplicate Roll Number check (for new insertions)
-        if (!isEdit) {
-            let rollInt = parseInt(rollNo);
-            let exists = studentsList.some(s => s.rollNo === rollInt);
-            if (exists) {
-                showAlert("danger", `Student with Roll Number ${rollNo} already exists!`);
-                return; // return statement
-            }
+        // Duplicate Roll Number check
+        let rollInt = parseInt(rollNo);
+        let exists = studentsList.some(s => s.rollNo === rollInt);
+        if (exists) {
+            showAlert("danger", `Student with Roll Number ${rollNo} already exists!`);
+            return; // return statement
         }
 
         // Construct payload parameters for POST method demonstration
@@ -354,7 +324,6 @@ $(document).ready(() => {
             name: name,
             rollNo: parseInt(rollNo), // Type Conversion
             email: email,
-            department: department,
             gender: gender,
             joiningDate: date,
             phone: phone
@@ -368,28 +337,13 @@ $(document).ready(() => {
             .done((response) => {
                 console.log("POST Success! Data mirrored from server:", response.json);
 
-                if (isEdit) {
-                    // Update Student details inside global list
-                    let student = studentsList.find(s => s.rollNo === parseInt(origRoll));
-                    if (student) {
-                        student.name = name;
-                        student.email = email;
-                        student.department = department;
-                        student.gender = gender;
-                        student.joiningDate = date;
-                        student.phone = phone;
-                        showAlert("success", `Details of student "${name}" updated successfully!`);
-                    }
-                } else {
-                    // OOP: Create Student Class Instance
-                    let newStudent = new Student(name, rollNo, email, department, gender, date, phone);
-                    studentsList.push(newStudent);
-                    showAlert("success", `New student "${name}" added successfully!`);
-                }
+                // OOP: Create Student Class Instance
+                let newStudent = new Student(name, rollNo, email, gender, date, phone);
+                studentsList.push(newStudent);
+                showAlert("success", `New student "${name}" added successfully!`);
 
                 resetForm();
                 updateUI();
-                $("#joiningDate").val(todayStr);
             })
             .fail(() => {
                 showAlert("danger", "Mock POST Request failed. Please check internet connection.");
@@ -410,73 +364,18 @@ $(document).ready(() => {
         markAbsent(roll);
     });
 
-    // Edit button click event using jQuery $
-    $("#studentTableBody").on("click", ".btn-edit-click", function () {
-        let roll = $(this).data("roll");
-        let student = studentsList.find(s => s.rollNo === parseInt(roll));
-        
-        if (student) {
-            // Fill inputs using jQuery $
-            $("#studentName").val(student.name);
-            $("#rollNo").val(student.rollNo).prop("readonly", true); // Disable roll edit
-            $("#email").val(student.email);
-            $("#department").val(student.department);
-            $(`input[name="gender"][value="${student.gender}"]`).prop("checked", true);
-            $("#joiningDate").val(student.joiningDate);
-            $("#phone").val(student.phone);
-
-            // Change UI text
-            $("#formTitle").text("Edit Student Details");
-            $("#submitBtn").text("Update Student").removeClass("btn-primary").addClass("btn-warning");
-
-            // Set tracker hidden values
-            $("#editMode").val("true");
-            $("#originalRollNo").val(student.rollNo);
-
-            // Scroll to Form section
-            $('html, body').animate({
-                scrollTop: $("#add-student").offset().top - 80
-            }, 300);
-        }
-    });
-
-    // Delete button click event using jQuery $ (Triggers Modal)
+    // Delete button click event using jQuery $ (uses native confirm alert dialog instead of modal)
     $("#studentTableBody").on("click", ".btn-delete-click", function () {
-        rollToDelete = $(this).data("roll");
+        let roll = $(this).data("roll");
         let name = $(this).data("name");
 
-        $("#modalStudentName").text(name);
-        $("#modalStudentRoll").text(rollToDelete);
-
-        // Show Bootstrap Modal
-        let myModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-        myModal.show();
-    });
-
-    // Modal delete confirmation button click event using jQuery $
-    $("#confirmDeleteBtn").on("click", () => {
-        if (rollToDelete) {
-            deleteStudent(rollToDelete);
-            rollToDelete = null;
-            
-            // Hide Modal
-            let modalEl = document.getElementById('deleteModal');
-            let modalInstance = bootstrap.Modal.getInstance(modalEl);
-            modalInstance.hide();
+        let confirmDelete = confirm(`Are you sure you want to delete ${name} (Roll No: ${roll})?`);
+        if (confirmDelete) {
+            studentsList = studentsList.filter(s => s.rollNo !== parseInt(roll));
+            attendanceLogs = attendanceLogs.filter(log => log.studentRoll !== parseInt(roll));
+            updateUI();
+            showAlert("success", `Student ${name} deleted successfully.`);
         }
-    });
-
-    // Live Search Box (KeyUp event using jQuery $)
-    $("#searchStudent").on("keyup", function () {
-        let query = $(this).val().toLowerCase();
-        
-        let filtered = studentsList.filter(s => {
-            return s.name.toLowerCase().includes(query) || 
-                   s.rollNo.toString().includes(query) || 
-                   s.department.toLowerCase().includes(query);
-        });
-
-        renderStudentTable(filtered);
     });
 
     // Mark Attendance Form Submission using jQuery $
